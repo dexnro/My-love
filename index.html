@@ -104,10 +104,11 @@
   }
 
   function startTyping() {
-    letterEl.textContent = "";
-    charIndex = 0;
-    typingInterval = setInterval(typeLine, 50);
-  }
+  letterEl.textContent = "";
+  charIndex = 0;
+  // Increase interval to slow down typing
+  typingInterval = setInterval(typeLine, 120); // 120ms per character
+}
 
   nextBtn.addEventListener('click', ()=>{
   // Play music only if not already playing
@@ -151,3 +152,4 @@
 
 </body>
 </html>
+
