@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Love Letter 💌</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: radial-gradient(#0b0c2d, #000);
+    color: #ffdde1;
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  #letter {
+    font-size: 1.5rem;
+    max-width: 600px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    margin-bottom: 30px;
+  }
+
+  button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    background: #ff4d6d;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(255,77,109,0.5);
+    transition: transform 0.2s;
+  }
+
+  button:hover {
+    transform: scale(1.1);
+  }
+
+  .heart {
+    position: absolute;
+    font-size: 24px;
+    animation: float 4s infinite;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0); opacity: 1; }
+    50% { transform: translateY(-30px); opacity: 0.7; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<div id="letter"></div>
+<button id="nextLine">Next Line 💖</button>
+
+<audio id="bgMusic" loop>
+  <source src="Marry Me - Jason Derulo (Lyrics) 🎵.mp3" type="audio/mpeg">
+</audio>
+
+
+<script>
+  const letterEl = document.getElementById('letter');
+  const nextBtn = document.getElementById('nextLine');
+  const music = document.getElementById('bgMusic');
+
+ const lines = [
+  "Hi, lovee ko I love you for being exactly who you are thoughtful, genuine, and amazing 💖",
+  "I appreciate every part of you, your thoughts, your heart, and your soul 🌸",
+  "I want you to know that I am here for you always, and my feelings for you are true 💌",
+  "You can trust that you are cherished and valued every single day 🌹",
+  "Thank you for being you  wonderful, inspiring, and loved deeply by me 💓",
+  "I promise to always respect, support, and care for you, no matter what 💖",
+  "Your presence in my life makes everything brighter and more meaningful ✨",
+  "Every day become special because you are special to me 💕",
+  "I love you more than words can express, now and forever 🌷",
+  "With all my heart, always yours 💘",
+  "I love you, lovee ko! Michaela Angela Y. Recongco"
+];
+
+
+  let currentLine = 0;
+  let charIndex = 0;
+  let typingInterval;
+
+  function typeLine() {
+    if(currentLine >= lines.length) return;
+
+    if(charIndex < lines[currentLine].length){
+      letterEl.textContent += lines[currentLine][charIndex];
+      charIndex++;
+    } else {
+      clearInterval(typingInterval);
+      createFloatingHearts();
+    }
+  }
+
+  function startTyping() {
+    letterEl.textContent = "";
+    charIndex = 0;
+    typingInterval = setInterval(typeLine, 50);
+  }
+
+  nextBtn.addEventListener('click', ()=>{
+  // Play music only if not already playing
+  if(music.paused){
+    music.play();
+  }
+
+  if(charIndex < lines[currentLine].length){
+    // Finish current line instantly
+    letterEl.textContent = lines[currentLine];
+    clearInterval(typingInterval);
+    createFloatingHearts();
+  } else {
+    currentLine++;
+    if(currentLine < lines.length){
+      startTyping();
+    } else {
+      letterEl.textContent += "\n\n💌 I LOVE YOUUU!";
+      nextBtn.style.display = 'none';
+    }
+  }
+});
+
+
+  startTyping();
+
+  // Floating hearts animation
+  function createFloatingHearts(){
+    for(let i=0;i<5;i++){
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.textContent = '💖';
+      heart.style.left = Math.random() * window.innerWidth + 'px';
+      heart.style.top = window.innerHeight + 'px';
+      heart.style.animationDuration = (2 + Math.random()*2)+'s';
+      document.body.appendChild(heart);
+      setTimeout(()=>heart.remove(), 4000);
+    }
+  }
+</script>
+
+</body>
+</html>
